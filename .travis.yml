@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t roelkers/react-test -f ./client/Dockerfile.dev
+
+script:
+  - docker run roelkers/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t roelkers/multi-client ./client
+  - docker build -t roelkers/multi-nginx ./nginx
+  - docker build -t roelkers/multi-server ./server
+  - docker build -t roelkers/multi-worker ./worker
+
+  -echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  -docker push roelkers/multi-client
+  -docker push roelkers/multi-nginx
+  -docker push roelkers/multi-server
+  -docker push roelkers/multi-worker
