@@ -14,9 +14,9 @@ after_success:
   - docker build -t roelkers/multi-server ./server
   - docker build -t roelkers/multi-worker ./worker
 
-  -echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
-  -docker push roelkers/multi-client
-  -docker push roelkers/multi-nginx
-  -docker push roelkers/multi-server
-  -docker push roelkers/multi-worker
+  - docker push roelkers/multi-client
+  - docker push roelkers/multi-nginx
+  - docker push roelkers/multi-server
+  - docker push roelkers/multi-worker
